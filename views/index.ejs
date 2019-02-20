@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewpoint" content="width=device-width", initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>img {width:60%;
+                    margin:auto}
+           </style>
+        <title>Mongo File Uploads</title> 
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 m-auto">
+                    <h1 class="text-center display-5 my-5">Mongo File Uploads</h1>
+                    <form method="POST" action="/upload" enctype="multipart/form-data">
+                    <div class="custom-file mb-3">
+                        <input type="file" name="myfile" id="file" class="custom-file-input">
+                        <label for="file" class="custom-file-label">Choose file</label>
+                    </div>
+                    <input type="submit" value="submit" class="btn btn-info btn-block" />
+                    </form>
+                    <hr>
+                    <% if(files){ %>
+                        <% files.forEach(function(file){ %>
+                         <div class="card card-body mb-3">
+                           <% if(file.isImage){ %>
+                          <img src="image/<%=file.filename %>" alt="image" />
+                           <% }else{ %>
+                            <%=file.filename %>
+                            <% } %>
+                            <form method="POST" action="/file/<%=file._id%>?_method=DELETE"><!--using a method overide right here,using Delete insteand of POST-->
+                            <button class="btn btn-danger btn-block mt-4">Delete</button>
+                            </form>
+                         </div>
+                       <% }) %>
+                        <% } else { %>
+                          <p>No files to show</p>
+                       <% } %>
+
+
+                </div><!-- class m-auto will put the text in the middle,enctype is required when you are using 
+                forms that have a file upload control. Note that the value of the for attribute shoudl match
+            the id of the checkbox -->
+            </div>
+        </div>
+    
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>   
+    </body>
+</html>
